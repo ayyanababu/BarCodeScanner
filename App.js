@@ -13,12 +13,15 @@ import {Platform, StyleSheet, Text, View, TouchableOpacity,
 import {
   BarcodePicker,
   ScanditModule,
+  ScanSession,
   Barcode,
-  ScanSettings
+  SymbologySettings,
+  ScanSettings,
+  ScanOverlay
 } from 'scandit-react-native';
 
 
-ScanditModule.setAppKey('AVBsUAUuGDziRWLNowhuS2k4Wd8rAfsiLnaSjuJ4Qk7wDaRTfC27qvttyS1PKbhnrlXU+n9ZYUokG8j3WWmzUx5nJYD1YnIUHw0giSJPV2QoHGJ8in8z4Pt4/g1heBvjxXBiywhA2aDNcmAmJFvdXl1zKSmbYQ5Br3tH0+l2ijZ2cRWwlXl2z5hVOiGvXH3uoHd3CR5N0UNVYZQdyWe12e5To+cYcPwPu0qMMdNBYXU8ciDEC2pvz0t2K5mbX267WyzlFcpYT11yT+4C1nZEXd50uQSnY4jn+FUHiZRGQ7O6XKC0dFz5541XY8A9Rs24NV3HXE8hDW+edQKqxWLYYbZkYGr8b+c2T27HkLVCwrVnIXfIeVI3ljxeLdBUam/xxU9PMe1OIaGwVb0ziXpN8aZ24XpAQfk+2mmsnlVKxtEcLvmcnlLkZcdY8+sBYKykcnVk1J9aRMPkH23qw0xlbHFFnem5TPQJPGgIAAd1PWCafudAdGOA7JlT6SvUR0FPXxOf1g0cvafyOiMsH/ebss1L3HGIvSPCbohabgM4DJYfvIkW/fK67sx8k6LaSNoPMEeL/kBX3Sua8A81awHovrscLYfJMGVtdeEiWH6AVSqdFw0JBrzjsDFuIQjLnkDlIaHYj7BwCk86qbFDRKYwPD1wGrkSaoPgflv9PYpPTNDzKX7fG/We3jnA234h541dhP+QIeoPdJ7k8RROSbM4Ec8hPheCkAtMUOQ6t5llWnjaqiOIbDavmeook2gNLdYHIvhwr3JPiD/fA6owgxn2ZbPag8nD6KOxwGzvuMCLpTKUQ8kqbAp2QBIFbGwaNSjLdj2RUCPlD1XawxTttn9S/H+q21faQgDffSUsIel7LQkuTEgPqiiQ4Rji5eDk8IQ1JrVwm1JUBEjKsW/GWYy6QPf+x+lAMgiOXWdYZuy/S96Lo1+6/ZEJOMzMgmIxHvnEkA1hDKvB5/AJrzxcSTJr9Zf8iRsNShZ2FtDy4CQCH0z6AqyYwBaWBylvppcSE9XAKV16L+LSSRcZyhIzxwnVUif+utyV76aTM93R8IVqUIFR4rEpym/Psux5bchrVcXoIidCldD/VP7LdQVE9Bm4f8KO1dK86sm+l2+mN2UURdU2DRdnVAcgReZiBVGBmP0CCUjzYxP97B1lRvdU4W/aJc62FkJv1NSaOv1sIHmrrt3wlZ30P1kjlqQW');
+ScanditModule.setAppKey('AWHcBgAuHZOfLq/leycGiBU/hT60NkQeWlo2XSl5SVQuPQp8sCsXVcln+54VarsLlDOcRld0Wp6kWMBqS0hib2BfJoeeaQlxawt1iL5kk0xgM6aXL2W0dO5DF4vfAQ/DMybjecqWoH+6jDOTlKtB/GjgSj+f7v70S1Vy8soQGR87k+iwdQsMnl08qc72LkUITBtx22MvVP+2e7lVexLWSI6+g8oFwHf4PgxntBoAaXv+A3pIjICgej04eDjzoQ3nEqfE9Xq4OIA1O6Tyg7qBekvNCor/lX3NtUKQhH6Am21UDve60TnSHTrPTh5J0xdc2avUhukqirCxVKc66XcpDsbiePJyQDUa39DbJymWbcRmw8vd/JDldUoBZNoV2UfU8Q04VgO2D6N0TEE+Qb91Ht8JPnSO24pYYmlAvhlrCFF+ntIkq3xzV3a8peVTuIcvMn985sH1tiW7bVogG8WpSkFtbblpQcZxrj9H1zuypgpItEG+lL+OnDHBaElw2IAsXqiu5t/AoUIX1UvfafFQHGvMHxpyRGjpmIBSVsoUFdkzAhdMPr5bzpsKg5C2pv6eU+aVh2dszpquHzCIxVHDWD6zdLdU1ds/iDGob2skbXOv4tk7XqSFqGYTIYW0VIiEzXqTgsi3JUTLR497AARWGYK2DtJGR1VJCdZ4wBW9ubWPtB0KiCZdu4Ko/WGyvJ6fa4QB8e7lwLk+hIQvp4/B1DG3uWeA4YRQarjlYRi4TrpO9VYmWcWLhugHGbM3ojoE5lcF6JEQSorRgtro+TrsLp+bzNfmRe93JmjmWmjf4dUOT8Y=');
 this.settings = new ScanSettings();
 this.settings.setSymbologyEnabled(Barcode.Symbology.EAN13, true);
 this.settings.setSymbologyEnabled(Barcode.Symbology.EAN8, true);
@@ -26,6 +29,13 @@ this.settings.setSymbologyEnabled(Barcode.Symbology.UPCA, true);
 
 type Props = {};
 export default class App extends Component<Props> {
+
+  constructor(props){
+    super(props)
+    this.state = {
+      showCamera: false
+    }
+  }
 
   componentWillMount() {
     this.settings = new ScanSettings();
@@ -38,6 +48,10 @@ export default class App extends Component<Props> {
     this.settings.setSymbologyEnabled(Barcode.Symbology.QR, true);
     this.settings.setSymbologyEnabled(Barcode.Symbology.DATA_MATRIX, true);
     this.settings.setSymbologyEnabled(Barcode.Symbology.CODE128, true);
+    this.settings.matrixScanEnabled = true;
+    this.settings.codeRejectionEnabled = true;
+    this.settings.highDensityModeEnabled = true;
+    this.settings.maxNumberOfCodesPerFrame = 10;
 
     /* Some 1d barcode symbologies allow you to encode variable-length data. By default, the
        Scandit BarcodeScanner SDK only scans barcodes in a certain length range. If your
@@ -88,8 +102,8 @@ export default class App extends Component<Props> {
   }
 
   cameraPermissionGranted() {
-    this.scanner.startScanning();
-    AppState.addEventListener('change', this._handleAppStateChange);
+    // this.scanner.startScanning();
+    //  AppState.addEventListener('change', this._handleAppStateChange);
   }
 
   async componentDidMount() {
@@ -101,13 +115,13 @@ export default class App extends Component<Props> {
     }
   }
 
-  _handleAppStateChange = (nextAppState) => {
-    if (nextAppState.match(/inactive|background/)) {
-      this.scanner.stopScanning();
-    } else {
-      this.scanner.startScanning();
-    }
-  }
+  // _handleAppStateChange = (nextAppState) => {
+  //   if (nextAppState.match(/inactive|background/)) {
+  //     this.scanner.stopScanning();
+  //   } else {
+  //     // this.scanner.startScanning();
+  //   }
+  // }
 
 
   onScan(session) {
@@ -115,7 +129,25 @@ export default class App extends Component<Props> {
   }
 
   startScan = () => {
-    this.scanner.startScanning();
+    this.setState({
+      showCamera: !this.state.showCamera
+    }, () => {
+      if (this.state.showCamera){
+        // this.scanner.setGuiStyle(ScanOverlay.GuiStyle.MATRIX_SCAN);
+        this.scanner.startScanning();
+      }
+    })
+  }
+
+  onRecognizeNewCodes(session) {
+    // If you want to visually reject a code you should use ScanSession's rejectCode.
+    // For example, the following code will reject all EAN8 codes.
+    console.log('all code sessions', session);
+    session.newlyTrackedCodes.forEach(function(barcode) {
+      if (barcode.symbology == Barcode.Symbology.EAN8) {
+        session.rejectTrackedCode(barcode);
+      }
+    });
   }
 
   render() {
@@ -126,11 +158,11 @@ export default class App extends Component<Props> {
         <TouchableOpacity onPress={this.startScan}>
           <Text style={styles.instructions}>"Start"</Text>
         </TouchableOpacity>
-        <BarcodePicker
-      ref={(scan) => { this.scanner = scan }}
-      scanSettings={ this.settings }
-      onScan={(session) => { this.onScan(session) }}
-      style={{ flex: 1 }}/>
+        {this.state.showCamera && <BarcodePicker
+          ref={(scan) => { this.scanner = scan }}
+          scanSettings={ this.settings }
+          onRecognizeNewCodes={(session) => { this.onRecognizeNewCodes(session) }}
+          style={{ width: 400, height: 400 }}/>}
       </View>
     );
   }
